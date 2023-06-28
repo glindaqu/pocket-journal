@@ -2,6 +2,7 @@ package com.linkqw.diary;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +22,9 @@ public class SubjectAdd extends AppCompatActivity {
                 try(UsersHelper usersHelper = new UsersHelper(SubjectAdd.this)) {
                     usersHelper.addSubject(((EditText)findViewById(R.id.titleOfSubject))
                             .getText().toString());
+
+                    Intent intent = new Intent(SubjectAdd.this, EditSubjectsList.class);
+                    startActivity(intent);
                 }
             }
         });

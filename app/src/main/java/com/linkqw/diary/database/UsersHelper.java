@@ -15,12 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class UsersHelper extends SQLiteOpenHelper {
 
     private final Context context;
 
     public static final String DATABASE_NAME = "Journal.db";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
 
     public static final String ID_COLUMN = "_id";
 
@@ -43,7 +44,7 @@ public class UsersHelper extends SQLiteOpenHelper {
                 "status" + " NVARCHAR(50) NOT NULL," +
                 "pairNumber INTEGER NOT NULL," +
                 "subjectID INTEGER NOT NULL," +
-                "dateStamp" + " NVARCHAR(10) NOT NULL);";
+                "dateStamp" + " DATE NOT NULL);";
         db.execSQL(query2);
 
         String query3 = "CREATE TABLE subjects(" +
@@ -58,6 +59,12 @@ public class UsersHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + "heap");
         db.execSQL("DROP TABLE IF EXISTS subjects");
         this.onCreate(db);
+    }
+
+    public void removeAllFromHeap() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM heap;");
+        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
     }
 
     public void addNewPerson(String fname, String lname) {
@@ -106,10 +113,11 @@ public class UsersHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<String> getAllSkippedBySubject(String subject) {
+    public ArrayList<String> getAllSkippedBySubject(String subject, String date1, String date2) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query1 = "SELECT personID, status FROM heap WHERE " +
-                "subjectID = " + getSubjectByName(subject) + ";";
+                "subjectID = " + getSubjectByName(subject) + "" +
+                " AND dateStamp BETWEEN " + "'" + date1 + "'" + " AND " + "'" + date2 + "'" + ";";
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -125,9 +133,11 @@ public class UsersHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<String> getAllSkipped() {
+    public ArrayList<String> getAllSkipped(String date1, String date2) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query1 = "SELECT personID, status FROM heap;";
+        String query1 = "SELECT personID, status FROM heap" +
+        " WHERE dateStamp BETWEEN " + "'" + date1 + "'" + " AND "
+                + "'" + date2 + "'" + ";";
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -143,17 +153,13 @@ public class UsersHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public void addToHeap(int userId, String state, String subject, int pairNumber) {
-        Date date = new Date();
-        @SuppressLint("SimpleDateFormat")
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
-
+    public void addToHeap(int userId, String state, String subject, int pairNumber, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("personID", userId);
         contentValues.put("status", state);
-        contentValues.put("dateStamp", dateFormat.format(date));
+        contentValues.put("dateStamp", date);
         contentValues.put("subjectID", getSubjectByName(subject));
         contentValues.put("pairNumber", pairNumber);
 

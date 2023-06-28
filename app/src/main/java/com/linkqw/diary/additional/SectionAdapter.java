@@ -2,11 +2,13 @@ package com.linkqw.diary.additional;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,9 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
 
     Context context;
     ArrayList<String> firstname, lastname, status;
+    Boolean isLastFirst = false;
+
+    public static final String FILE_NAME = "settings";
 
     @NonNull
     @Override
@@ -33,7 +38,12 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.title.setText(firstname.get(position) + " " + lastname.get(position));
+        if (isLastFirst) {
+            holder.title.setText(lastname.get(position) + " " + firstname.get(position));
+        } else {
+            holder.title.setText(firstname.get(position) + " " + lastname.get(position));
+        }
+
         String st = status.get(position);
 
         switch (st) {
@@ -69,10 +79,11 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     }
 
     public SectionAdapter(Context context, ArrayList<String> f, ArrayList<String> l,
-                                 ArrayList<String> status) {
+                                 ArrayList<String> status, Boolean isLastFirst) {
         this.context = context;
         this.lastname = l;
         this.firstname = f;
         this.status = status;
+        this.isLastFirst = isLastFirst;
     }
 }

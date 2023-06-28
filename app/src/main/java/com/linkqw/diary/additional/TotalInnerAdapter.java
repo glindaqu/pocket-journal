@@ -36,7 +36,14 @@ public class TotalInnerAdapter extends RecyclerView.Adapter<TotalInnerAdapter.My
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.personUnit.setText(dataset.get(position).split(",")[0]);
+        String name = dataset.get(position).split(",")[0];
+
+        if (name.length() > 15) {
+            holder.personUnit.setText(name.split(" ")[0] +
+                    "\n" + name.split(" ")[1]);
+        } else {
+            holder.personUnit.setText(name);
+        }
 
         int resp = Integer.parseInt(dataset.get(position).split(",")[1]);
         int disResp = Integer.parseInt(dataset.get(position).split(",")[2]);
@@ -68,7 +75,7 @@ public class TotalInnerAdapter extends RecyclerView.Adapter<TotalInnerAdapter.My
     }
 
     public TotalInnerAdapter(Context context, ArrayList<String> f, ArrayList<String> l,
-                          ArrayList<String> status) {
+                          ArrayList<String> status, Boolean isLastFirst) {
         this.context = context;
         this.dataset = new ArrayList<>();
 
@@ -77,7 +84,12 @@ public class TotalInnerAdapter extends RecyclerView.Adapter<TotalInnerAdapter.My
 
         for (int i = 0; i<l.size(); i++) {
             personsData.add(f.get(i) + " " + l.get(i) + "," + status.get(i));
-            names.add(f.get(i) + " " + l.get(i));
+
+            if (isLastFirst) {
+                names.add(l.get(i) + " " + f.get(i));
+            } else {
+                names.add(f.get(i) + " " + l.get(i));
+            }
         }
 
         for (String name : names) {

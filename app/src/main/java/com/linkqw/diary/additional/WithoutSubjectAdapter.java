@@ -68,7 +68,7 @@ public class WithoutSubjectAdapter extends RecyclerView.Adapter<WithoutSubjectAd
     }
 
     public WithoutSubjectAdapter(Context context, ArrayList<String> f, ArrayList<String> l,
-                             ArrayList<String> status) {
+                             ArrayList<String> status, Boolean isLastFirst) {
         this.context = context;
         this.dataset = new ArrayList<>();
 
@@ -77,7 +77,11 @@ public class WithoutSubjectAdapter extends RecyclerView.Adapter<WithoutSubjectAd
 
         for (int i = 0; i<l.size(); i++) {
             personsData.add(f.get(i) + " " + l.get(i) + "," + status.get(i));
-            names.add(f.get(i) + " " + l.get(i));
+            if (isLastFirst) {
+                names.add(l.get(i) + " " + f.get(i));
+            } else {
+                names.add(f.get(i) + " " + l.get(i));
+            }
         }
 
         for (String name : names) {

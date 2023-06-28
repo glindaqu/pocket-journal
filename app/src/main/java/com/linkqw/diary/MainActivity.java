@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static String CurrentDate;
 
     @SuppressLint("SimpleDateFormat")
-    DateFormat format = new SimpleDateFormat("dd-MM-yy");
+    DateFormat format = new SimpleDateFormat("yy-MM-dd");
 
     Boolean ready = false;
 
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month++;
-                String data = (String.valueOf(dayOfMonth).length() > 1
-                        ? dayOfMonth : "0" + dayOfMonth) + "-" + (String.valueOf(month).length() > 1
-                        ? month : "0" + month) + "-" + String.valueOf(year).substring(2);
+                String data = String.valueOf(year).substring(2) + "-" +
+                        (String.valueOf(month).length() > 1 ? month : "0" + month) + "-" +
+                        (String.valueOf(dayOfMonth).length() > 1 ? dayOfMonth : "0" + dayOfMonth);
 
                 CurrentDate = data;
                 ((Button)findViewById(R.id.date)).setText(data);
@@ -97,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
                 dateSetListener, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    public void settings_click(View view) {
+        Intent intent = new Intent(MainActivity.this, Settings.class);
+        startActivity(intent);
     }
 
     public String getCurrentDate() {

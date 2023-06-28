@@ -20,6 +20,7 @@ public class TotalAdapter extends RecyclerView.Adapter<TotalAdapter.MyViewHolder
     Context context;
     ArrayList<ArrayList<String>> firstname, lastname, status;
     ArrayList<String> title;
+    Boolean isLastFirst = false;
 
     @NonNull
     @Override
@@ -35,7 +36,7 @@ public class TotalAdapter extends RecyclerView.Adapter<TotalAdapter.MyViewHolder
         holder.title.setText(title.get(position));
 
         TotalInnerAdapter adapter = new TotalInnerAdapter(this.context, firstname.get(position),
-                lastname.get(position), status.get(position));
+                lastname.get(position), status.get(position), isLastFirst);
         holder.list.setAdapter(adapter);
         holder.list.setLayoutManager(new LinearLayoutManager(this.context));
     }
@@ -60,11 +61,12 @@ public class TotalAdapter extends RecyclerView.Adapter<TotalAdapter.MyViewHolder
     public TotalAdapter(Context context, ArrayList<ArrayList<String>> f,
                                  ArrayList<ArrayList<String>> l,
                                  ArrayList<ArrayList<String>> status,
-                        ArrayList<String> title) {
+                        ArrayList<String> title, Boolean isLastFirst) {
         this.context = context;
         this.lastname = l;
         this.firstname = f;
         this.status = status;
         this.title = title;
+        this.isLastFirst = isLastFirst;
     }
 }

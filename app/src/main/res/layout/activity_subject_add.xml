@@ -11,23 +11,23 @@
         android:id="@+id/addSubAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginBottom="64dp"
         android:width="300dp"
         android:height="70dp"
         android:backgroundTint="@color/darkBlue"
         android:text="Добавить"
         android:textColor="@color/bisque"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleOfSubject" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/titleOfSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:width="300dp"
         android:backgroundTint="@color/darkBlue"
         android:ems="10"
@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"

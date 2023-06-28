@@ -8,9 +8,10 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/startFill"
+        android:id="@+id/deleteHeap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:width="300dp"
         android:height="70dp"
         android:backgroundTint="@color/darkBlue"
@@ -39,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startFill"
+        app:layout_constraintTop_toBottomOf="@+id/deleteHeap"
         tools:ignore="UsingOnClickInXml" />
 
     <Button
@@ -61,10 +62,28 @@
         tools:ignore="UsingOnClickInXml" />
 
     <Button
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:width="300dp"
+        android:height="70dp"
+        android:backgroundTint="@color/darkBlue"
+        android:onClick="settings_click"
+        android:text="Настройки"
+        android:textColor="@color/bisque"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list"
+        tools:ignore="UsingOnClickInXml" />
+
+    <Button
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:width="300dp"
         android:height="70dp"
         android:backgroundTint="@color/darkBlue"
@@ -73,9 +92,8 @@
         android:textColor="@color/bisque"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list"
+        app:layout_constraintTop_toBottomOf="@+id/settings"
         tools:ignore="UsingOnClickInXml" />
 
     <TextView
@@ -85,7 +103,7 @@
         android:layout_marginTop="32dp"
         android:text="Журнал"
         android:textColor="@color/bisque"
-        android:textSize="48sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

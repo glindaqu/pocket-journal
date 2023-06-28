@@ -45,13 +45,15 @@ public class FillStates extends AppCompatActivity {
 
     public void fill(View view) {
         if (index < names.size()) {
-            usersHelper.addToHeap(currentId, (String) ((Button)view).getText(), subject, pairNumber);
+            usersHelper.addToHeap(currentId, (String) ((Button)view).getText(), subject, pairNumber,
+                    getIntent().getExtras().getString("date"));
             String[] splited = names.get(index).split(",");
             currentId = Integer.parseInt(splited[0]);
             title.setText(splited[1]);
             index++;
         } else {
-            usersHelper.addToHeap(currentId, (String) ((Button)view).getText(), subject, pairNumber);
+            usersHelper.addToHeap(currentId, (String) ((Button)view).getText(), subject, pairNumber,
+                    getIntent().getExtras().getString("date"));
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

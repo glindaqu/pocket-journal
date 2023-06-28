@@ -5,14 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.linkqw.diary.additional.CustomAdapter;
 import com.linkqw.diary.additional.JournalSectionAdapter;
 import com.linkqw.diary.database.UsersHelper;
 
@@ -23,10 +22,13 @@ public class JournalView extends AppCompatActivity {
     RecyclerView recyclerView;
     JournalSectionAdapter customAdapter;
     FloatingActionButton floatingActionButton;
+    SharedPreferences settings;
 
     UsersHelper us;
     ArrayList<ArrayList<String>> firstname, lastname, status;
     ArrayList<String> title;
+
+    public static final String FILE_NAME = "settings";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,6 +39,8 @@ public class JournalView extends AppCompatActivity {
         recyclerView = findViewById(R.id.allSections);
         floatingActionButton = findViewById(R.id.switchToMonth);
 
+        settings = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+
         us = new UsersHelper(JournalView.this);
         firstname = new ArrayList<>();
         lastname = new ArrayList<>();
@@ -46,7 +50,13 @@ public class JournalView extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(JournalView.this, TotalsWithoutSubjects.class);
+                Intent intent;
+                if (settings.getBoolean("showSubs", false)) {
+                    intent = new Intent(JournalView.this, TotalStatesBy.class);
+                } else {
+                    intent = new Intent(JournalView.this, TotalsWithoutSubjects.class);
+                }
+                finish();
                 intent.putExtra("date", getIntent().getExtras().getString("date"));
                 startActivity(intent);
             }
@@ -54,7 +64,7 @@ public class JournalView extends AppCompatActivity {
 
         fillArrays();
         customAdapter = new JournalSectionAdapter(JournalView.this, firstname,
-                lastname, status, title);
+                lastname, status, title, settings.getBoolean("isLastFirst", false));
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(JournalView.this));
     }
@@ -70,6 +80,11 @@ public class JournalView extends AppCompatActivity {
             ArrayList<String> curStatuses = new ArrayList<>();
             for (String line : cur) {
                 String[] splitedLine = line.split(",");
+
+                if (!settings.getBoolean("displayIsHere", true) && splitedLine[1].equals("Был")) {
+                    continue;
+                }
+
                 curFirsts.add(us.getFirstname(Integer.parseInt(splitedLine[0])));
                 curLasts.add(us.getLastname(Integer.parseInt(splitedLine[0])));
                 curStatuses.add(splitedLine[1]);

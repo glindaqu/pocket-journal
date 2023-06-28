@@ -21,6 +21,7 @@ public class JournalSectionAdapter
     Context context;
     ArrayList<ArrayList<String>> firstname, lastname, status;
     ArrayList<String> title;
+    Boolean isLastFirst = false;
 
     @NonNull
     @Override
@@ -36,7 +37,7 @@ public class JournalSectionAdapter
         holder.title.setText(title.get(position));
 
         SectionAdapter adapter = new SectionAdapter(this.context, firstname.get(position),
-                lastname.get(position), status.get(position));
+                lastname.get(position), status.get(position), isLastFirst);
         holder.list.setAdapter(adapter);
         holder.list.setLayoutManager(new LinearLayoutManager(this.context));
     }
@@ -60,11 +61,13 @@ public class JournalSectionAdapter
 
     public JournalSectionAdapter(Context context, ArrayList<ArrayList<String>> f,
                                  ArrayList<ArrayList<String>> l,
-                                 ArrayList<ArrayList<String>> status, ArrayList<String> title) {
+                                 ArrayList<ArrayList<String>> status, ArrayList<String> title,
+                                 Boolean isLastFirst) {
         this.context = context;
         this.lastname = l;
         this.firstname = f;
         this.status = status;
         this.title = title;
+        this.isLastFirst = isLastFirst;
     }
 }

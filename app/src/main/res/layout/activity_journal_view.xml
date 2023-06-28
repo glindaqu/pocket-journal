@@ -25,6 +25,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/month" />
+        app:srcCompat="@drawable/month"
+        android:backgroundTint="@color/darkBlue"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@
         android:id="@+id/personsListEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginBottom="32dp"
         android:width="300dp"
         android:height="70dp"
         android:backgroundTint="@color/darkBlue"
@@ -21,14 +21,13 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/subjectsListEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:width="300dp"
         android:height="70dp"
         android:backgroundTint="@color/darkBlue"
@@ -36,10 +35,9 @@
         android:text="Предметы"
         android:textColor="@color/bisque"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/personsListEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personsListEdit" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
