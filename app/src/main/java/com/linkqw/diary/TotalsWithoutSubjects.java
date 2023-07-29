@@ -89,8 +89,8 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
                         intent.putExtra("date1", data);
                         intent.putExtra("date2", date2.getText().toString());
 
-                        finish();
                         startActivity(intent);
+                        finish();
                     }
                 };
 
@@ -125,8 +125,8 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
                         intent.putExtra("date1", date1.getText().toString());
                         intent.putExtra("date2", data);
 
-                        finish();
                         startActivity(intent);
+                        finish();
                     }
                 };
 
@@ -149,8 +149,9 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TotalsWithoutSubjects.this, TotalStatesBy.class);
                 intent.putExtra("date", getIntent().getExtras().getString("date"));
-                finish();
+
                 startActivity(intent);
+                finish();
             }
         });
 

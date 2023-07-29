@@ -72,8 +72,8 @@ public class TotalStatesBy extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TotalStatesBy.this, JournalView.class);
                 intent.putExtra("date", getIntent().getExtras().getString("date"));
-                finish();
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -94,8 +94,8 @@ public class TotalStatesBy extends AppCompatActivity {
                         intent.putExtra("date1", data);
                         intent.putExtra("date2", date2.getText().toString());
 
-                        finish();
                         startActivity(intent);
+                        finish();
                     }
                 };
 
@@ -130,8 +130,8 @@ public class TotalStatesBy extends AppCompatActivity {
                         intent.putExtra("date1", date1.getText().toString());
                         intent.putExtra("date2", data);
 
-                        finish();
                         startActivity(intent);
+                        finish();
                     }
                 };
 
@@ -202,7 +202,8 @@ public class TotalStatesBy extends AppCompatActivity {
                 curStatus.add(status);
             }
 
-            if (curFirstname.size() != 0 && curLastname.size() != 0 && curStatus.size() != 0) {
+            if (curFirstname.size() != 0 && curLastname.size() != 0) {
+                curStatus.size();
                 firstname.add(curFirstname);
                 lastname.add(curLastname);
                 status.add(curStatus);
