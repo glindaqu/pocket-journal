@@ -1,6 +1,8 @@
 package com.linkqw.diary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,36 @@ public class JournalEdit extends AppCompatActivity {
 
     UsersHelper us;
     ArrayList<String> firstname, lastname;
+    ArrayList<Integer> id;
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int delete_id = viewHolder.getAdapterPosition();
+            firstname.remove(delete_id);
+            lastname.remove(delete_id);
+
+            try(UsersHelper usersHelper = new UsersHelper(JournalEdit.this)) {
+                if (!usersHelper.delete_from(id.get(delete_id), "persons")) {
+                    Toast.makeText(JournalEdit.this, "error while delete. person", Toast.LENGTH_SHORT).show();
+                }
+                if (!usersHelper.delete_from_heap_by_person(id.get(delete_id))) {
+                    Toast.makeText(JournalEdit.this, "error while delete. heap", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(JournalEdit.this, "error while delete: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            id.remove(delete_id);
+            customAdapter.notifyDataSetChanged();
+        }
+    };
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -47,10 +79,12 @@ public class JournalEdit extends AppCompatActivity {
         us = new UsersHelper(JournalEdit.this);
         firstname = new ArrayList<>();
         lastname = new ArrayList<>();
+        id = new ArrayList<>();
 
         fillArrays();
         customAdapter = new CustomAdapter(JournalEdit.this, firstname, lastname);
         recyclerView.setAdapter(customAdapter);
+        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(JournalEdit.this));
     }
 
@@ -60,6 +94,7 @@ public class JournalEdit extends AppCompatActivity {
             Toast.makeText(this, "Nothing to display", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
+                id.add(cursor.getInt(0));
                 firstname.add(cursor.getString(1));
                 lastname.add(cursor.getString(2));
             }

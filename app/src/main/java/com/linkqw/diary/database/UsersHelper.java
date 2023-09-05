@@ -333,4 +333,22 @@ public class UsersHelper extends SQLiteOpenHelper {
 
         return names;
     }
+
+    public boolean delete_from(int id, String table) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        return db.delete(table, "_id" + "=" + id, null) > 0;
+    }
+
+    public boolean delete_from_heap_by_person(int person_id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        return db.delete("heap", "personID" + "=" + person_id, null) > 0;
+    }
+
+    public boolean delete_from_heap_by_subject(int subject_id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        return db.delete("heap", "subjectID" + "=" + subject_id, null) > 0;
+    }
 }

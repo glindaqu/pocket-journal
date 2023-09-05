@@ -59,7 +59,6 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
             default:
                 holder.edit.setText("ув");
         }
-
     }
 
     @Override
@@ -71,11 +70,13 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
 
         TextView title;
         Button edit;
+        TextView id;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.personName);
             edit = itemView.findViewById(R.id.statusEdit);
+            id = itemView.findViewById(R.id.id_section_row);
         }
     }
 

@@ -49,6 +49,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/id_section_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#00FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/statusEdit"
+                app:layout_constraintEnd_toEndOf="@+id/statusEdit"
+                app:layout_constraintStart_toStartOf="@+id/statusEdit"
+                app:layout_constraintTop_toTopOf="@+id/statusEdit" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
