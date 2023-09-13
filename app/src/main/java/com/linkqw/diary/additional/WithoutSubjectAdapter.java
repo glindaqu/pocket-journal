@@ -76,10 +76,11 @@ public class WithoutSubjectAdapter extends RecyclerView.Adapter<WithoutSubjectAd
         Set<String> names = new LinkedHashSet<>();
 
         for (int i = 0; i<l.size(); i++) {
-            personsData.add(f.get(i) + " " + l.get(i) + "," + status.get(i));
             if (isLastFirst) {
+                personsData.add(l.get(i) + " " + f.get(i) + "," + status.get(i));
                 names.add(l.get(i) + " " + f.get(i));
             } else {
+                personsData.add(f.get(i) + " " + l.get(i) + "," + status.get(i));
                 names.add(f.get(i) + " " + l.get(i));
             }
         }
