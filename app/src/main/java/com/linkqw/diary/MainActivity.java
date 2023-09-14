@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (ready) {
-            Intent intent = new Intent(MainActivity.this, SubjectPick.class);
+            Intent intent = new Intent(MainActivity.this, FillList.class);
             String d = ((Button)findViewById(R.id.date)).getText().toString();
             intent.putExtra("date", d);
             startActivity(intent);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.linkqw.diary.database.UsersHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FillStates extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class FillStates extends AppCompatActivity {
         title.setText(splited[1]);
 
         Bundle args = getIntent().getExtras();
+        assert args != null;
         subject = args.getString("subject");
 
         pairNumber = usersHelper.getCurrentPairNum(args.getString("date")) + 1;
@@ -46,14 +48,14 @@ public class FillStates extends AppCompatActivity {
     public void fill(View view) {
         if (index < names.size()) {
             usersHelper.addToHeap(currentId, (String) ((Button)view).getText(), subject, pairNumber,
-                    getIntent().getExtras().getString("date"));
+                    Objects.requireNonNull(getIntent().getExtras()).getString("date"));
             String[] splited = names.get(index).split(",");
             currentId = Integer.parseInt(splited[0]);
             title.setText(splited[1]);
             index++;
         } else {
             usersHelper.addToHeap(currentId, (String) ((Button)view).getText(), subject, pairNumber,
-                    getIntent().getExtras().getString("date"));
+                    Objects.requireNonNull(getIntent().getExtras()).getString("date"));
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

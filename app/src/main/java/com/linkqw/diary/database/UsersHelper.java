@@ -67,6 +67,23 @@ public class UsersHelper extends SQLiteOpenHelper {
         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("Recycle")
+    public boolean isExistInHeap(String userId, String pair, String date) {
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM heap WHERE personID = " + userId + " AND pairNumber = " + pair +
+                " AND dateStamp = " + "'" + date + "'";
+
+        boolean next = db.rawQuery(q, null).moveToNext();
+        return  next;
+    }
+
+    public void updateHeap(String userId, String pair, String status, String date) {
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "UPDATE heap SET status = " + "'" + status + "'" + " WHERE personID = " + userId +
+                " AND pairNumber = " + pair + " AND dateStamp = " + "'" + date + "'";
+        db.execSQL(q);
+    }
+
     public void addNewPerson(String fname, String lname) {
 
         SQLiteDatabase db = this.getWritableDatabase();
