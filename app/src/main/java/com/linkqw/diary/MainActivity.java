@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.linkqw.diary.database.UsersHelper;
+import com.linkqw.diary.shared.DateConvert;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,8 +25,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     DatePickerDialog datePickerDialog;
-
-    public static String CurrentDate;
+    String date;
 
     @SuppressLint("SimpleDateFormat")
     DateFormat format = new SimpleDateFormat("yy-MM-dd");
@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((TextView)findViewById(R.id.date)).setText(getCurrentDate());
+        date = getCurrentDate();
+
+        ((TextView)findViewById(R.id.date)).setText(DateConvert.ConvertToHuman(getCurrentDate()));
 
         try(UsersHelper usersHelper = new UsersHelper(this)) {
             if (usersHelper.getAllNames().size() > 0) {
@@ -54,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (ready) {
             Intent intent = new Intent(MainActivity.this, SubjectPick.class);
-            String d = ((Button)findViewById(R.id.date)).getText().toString();
-            intent.putExtra("date", d);
+            intent.putExtra("date", date);
             startActivity(intent);
         } else {
             Toast.makeText(this, "Journal is empty", Toast.LENGTH_SHORT).show();
@@ -70,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (ready) {
             Intent intent = new Intent(MainActivity.this, JournalView.class);
-            String d = ((Button)findViewById(R.id.date)).getText().toString();
-            intent.putExtra("date", d);
+            intent.putExtra("date", date);
             startActivity(intent);
         } else {
             Toast.makeText(this, "Journal is empty", Toast.LENGTH_SHORT).show();
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         (String.valueOf(month).length() > 1 ? month : "0" + month) + "-" +
                         (String.valueOf(dayOfMonth).length() > 1 ? dayOfMonth : "0" + dayOfMonth);
 
-                CurrentDate = data;
-                ((Button)findViewById(R.id.date)).setText(data);
+                date = data;
+                ((Button)findViewById(R.id.date)).setText(DateConvert.ConvertToHuman(data));
             }
         };
 
@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getCurrentDate() {
-        Date date = new Date();
+        Date dateLocal = new Date();
 
-        CurrentDate = format.format(date);
+        date = format.format(dateLocal);
 
-        return format.format(date);
+        return format.format(dateLocal);
     }
 }

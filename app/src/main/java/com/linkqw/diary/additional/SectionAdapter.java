@@ -22,6 +22,7 @@ import com.linkqw.diary.R;
 import com.linkqw.diary.database.UsersHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHolder> {
 
@@ -30,8 +31,6 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     Boolean isLastFirst = false;
     String pairNum;
     String date;
-
-    public static final String FILE_NAME = "settings";
 
     @NonNull
     @Override
@@ -51,20 +50,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
             holder.title.setText(firstname.get(position) + ((name_len > 15) ? "\n" : " ") + lastname.get(position));
         }
 
-        String st = status.get(position);
-
-        switch (st) {
-            case "Был":
-                holder.sectionAdapterItemStatus.setText("б");
-                break;
-
-            case "Не уважительная":
-                holder.sectionAdapterItemStatus.setText("н/б");
-                break;
-
-            default:
-                holder.sectionAdapterItemStatus.setText("ув");
-        }
+        holder.sectionAdapterItemStatus.setText(status.get(position));
 
         UsersHelper usersHelper = new UsersHelper(context);
 
@@ -72,14 +58,18 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 TextView b = holder.sectionAdapterItemStatus;
-                if (b.getText() == "ув") {
-                    b.setText("н/б");
+                if (b.getText() == "Уважительная") {
+                    b.setText("Не уважительная");
                     usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
                             pairNum, "Не уважительная", date);
+                } else if (b.getText() == "Не уважительная") {
+                    b.setText("Был");
+                    usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
+                            pairNum, "Был", date);
                 } else {
                     usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
                             pairNum, "Уважительная", date);
-                    b.setText("ув");
+                    b.setText("Уважительная");
                 }
             }
         });
@@ -95,8 +85,6 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
         TextView title;
         CardView sectionAdapterItem;
         TextView sectionAdapterItemStatus;
-        int pairNum;
-        String date;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

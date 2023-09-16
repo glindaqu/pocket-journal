@@ -100,7 +100,7 @@ public class UsersHelper extends SQLiteOpenHelper {
 
     public String getIdByUser(String name, String last) {
         SQLiteDatabase db = getReadableDatabase();
-        String q = "SELECT 1 FROM persons WHERE firstname = " + "'" + name + "'" +
+        String q = "SELECT * FROM persons WHERE firstname = " + "'" + name + "'" +
                 " AND lastname = " + "'" + last + "'";
 
         Cursor c = db.rawQuery(q, null);

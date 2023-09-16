@@ -5,8 +5,10 @@ import androidx.core.widget.CompoundButtonCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -82,11 +84,21 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        ((Button) findViewById(R.id.deleteHeap)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.deleteHeap)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 usersHelper.removeAllFromHeap();
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            assert uri != null;
+            String filePath = uri.getPath();
+            System.out.println(filePath);
+        }
     }
 }

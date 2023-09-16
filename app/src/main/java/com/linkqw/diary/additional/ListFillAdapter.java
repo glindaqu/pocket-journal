@@ -45,31 +45,34 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
         holder.hID.setOnClickListener(new View.OnClickListener() {
             final UsersHelper us = new UsersHelper(context);
             String userId = (String) ((TextView)holder.hID).getText();
-            String pair = String.valueOf(us.getCurrentPairNum(bundle.getString("date")) + 1);
+            int intPair = us.getCurrentPairNum(bundle.getString("date")) + 1;
+            String pair = String.valueOf(intPair);
 
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Выберите статус");
-                builder.setPositiveButton("ув", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Уважительная", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        holder.status.setText("Уважительная");
                         if (us.isExistInHeap(userId, pair, bundle.getString("date"))) {
                             us.updateHeap(userId, pair, "Уважительная", bundle.getString("date"));
                         } else {
                             us.addToHeap(
                                     Integer.parseInt(userId), "Уважительная", bundle.getString("subject"),
-                                    us.getCurrentPairNum(bundle.getString("date")) + 1,
+                                    intPair,
                                     bundle.getString("date"));
                         }
                     }
                 });
-                builder.setNegativeButton("нб", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Не уважительная", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        holder.status.setText("Не уважительная");
                         us.addToHeap(
                                 Integer.parseInt((String) ((TextView)view).getText()), "Не уважительная", bundle.getString("subject"),
-                                us.getCurrentPairNum(bundle.getString("date")) + 1,
+                                intPair,
                                 bundle.getString("date"));
                     }
                 });
@@ -88,11 +91,13 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
         TextView name;
         CardView card;
         TextView hID;
+        TextView status;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.ListStateAdapterItem);
             card = itemView.findViewById(R.id.ListStateItem);
             hID = itemView.findViewById(R.id.hiddenID);
+            status = itemView.findViewById(R.id.curStatus);
         }
     }
 
