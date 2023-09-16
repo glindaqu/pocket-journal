@@ -1,18 +1,17 @@
 package com.linkqw.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.linkqw.diary.database.UsersHelper;
 import com.linkqw.diary.shared.DateConvert;
@@ -39,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         date = getCurrentDate();
 
-        ((TextView)findViewById(R.id.date)).setText(DateConvert.ConvertToHuman(getCurrentDate()));
+        ((TextView) findViewById(R.id.date)).setText(DateConvert.ConvertToHuman(getCurrentDate()));
 
-        try(UsersHelper usersHelper = new UsersHelper(this)) {
+        try (UsersHelper usersHelper = new UsersHelper(this)) {
             if (usersHelper.getAllNames().size() > 0) {
                 ready = true;
             }
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startFill_onClick(View view) {
-        try(UsersHelper usersHelper = new UsersHelper(this)) {
+        try (UsersHelper usersHelper = new UsersHelper(this)) {
             if (usersHelper.getAllNames().size() > 0) {
                 ready = true;
             }
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void change_onClick(View view) {
-        try(UsersHelper usersHelper = new UsersHelper(this)) {
+        try (UsersHelper usersHelper = new UsersHelper(this)) {
             if (usersHelper.getAllNames().size() > 0) {
                 ready = true;
             }
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         (String.valueOf(dayOfMonth).length() > 1 ? dayOfMonth : "0" + dayOfMonth);
 
                 date = data;
-                ((Button)findViewById(R.id.date)).setText(DateConvert.ConvertToHuman(data));
+                ((Button) findViewById(R.id.date)).setText(DateConvert.ConvertToHuman(data));
             }
         };
 

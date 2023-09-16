@@ -1,28 +1,20 @@
 package com.linkqw.diary.additional;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.linkqw.diary.JournalEdit;
 import com.linkqw.diary.R;
 import com.linkqw.diary.database.UsersHelper;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHolder> {
 
@@ -31,6 +23,18 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     Boolean isLastFirst = false;
     String pairNum;
     String date;
+
+    public SectionAdapter(Context context, ArrayList<String> f, ArrayList<String> l,
+                          ArrayList<String> status, Boolean isLastFirst,
+                          int pairNum, String date) {
+        this.context = context;
+        this.lastname = l;
+        this.firstname = f;
+        this.status = status;
+        this.isLastFirst = isLastFirst;
+        this.pairNum = String.valueOf(pairNum + 1);
+        this.date = date;
+    }
 
     @NonNull
     @Override
@@ -92,17 +96,5 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
             sectionAdapterItem = itemView.findViewById(R.id.SectionAdapterItem);
             sectionAdapterItemStatus = itemView.findViewById(R.id.SectionAdapterItemStatus);
         }
-    }
-
-    public SectionAdapter(Context context, ArrayList<String> f, ArrayList<String> l,
-                                 ArrayList<String> status, Boolean isLastFirst,
-                          int pairNum, String date) {
-        this.context = context;
-        this.lastname = l;
-        this.firstname = f;
-        this.status = status;
-        this.isLastFirst = isLastFirst;
-        this.pairNum = String.valueOf(pairNum + 1);
-        this.date = date;
     }
 }

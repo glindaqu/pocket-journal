@@ -1,17 +1,17 @@
 package com.linkqw.diary;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.linkqw.diary.additional.CustomAdapter;
@@ -42,7 +42,7 @@ public class JournalEdit extends AppCompatActivity {
             firstname.remove(delete_id);
             lastname.remove(delete_id);
 
-            try(UsersHelper usersHelper = new UsersHelper(JournalEdit.this)) {
+            try (UsersHelper usersHelper = new UsersHelper(JournalEdit.this)) {
                 if (!usersHelper.delete_from(id.get(delete_id), "persons")) {
                     Toast.makeText(JournalEdit.this, "error while delete. person", Toast.LENGTH_SHORT).show();
                 }

@@ -1,15 +1,15 @@
 package com.linkqw.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.linkqw.diary.additional.JournalSectionAdapter;
@@ -71,7 +71,7 @@ public class JournalView extends AppCompatActivity {
     }
 
     public void fillArrays() {
-         ArrayList<String> data = us.getAllPerformedPais(getIntent().getExtras()
+        ArrayList<String> data = us.getAllPerformedPais(getIntent().getExtras()
                 .getString("date"));
 
         for (int i = 0; i < data.size(); i++) {
