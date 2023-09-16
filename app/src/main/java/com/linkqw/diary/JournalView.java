@@ -64,7 +64,8 @@ public class JournalView extends AppCompatActivity {
 
         fillArrays();
         customAdapter = new JournalSectionAdapter(JournalView.this, firstname,
-                lastname, status, title, settings.getBoolean("isLastFirst", false));
+                lastname, status, title, settings.getBoolean("isLastFirst", false),
+                getIntent().getExtras().getString("date"));
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(JournalView.this));
     }

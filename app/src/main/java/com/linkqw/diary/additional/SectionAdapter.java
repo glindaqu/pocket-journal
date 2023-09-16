@@ -1,7 +1,9 @@
 package com.linkqw.diary.additional;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +13,13 @@ import android.widget.TextView;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkqw.diary.JournalEdit;
 import com.linkqw.diary.R;
+import com.linkqw.diary.database.UsersHelper;
 
 import java.util.ArrayList;
 
@@ -24,6 +28,8 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     Context context;
     ArrayList<String> firstname, lastname, status;
     Boolean isLastFirst = false;
+    String pairNum;
+    String date;
 
     public static final String FILE_NAME = "settings";
 
@@ -37,7 +43,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         int name_len = (lastname.get(position) + firstname.get(position)).length();
         if (isLastFirst) {
             holder.title.setText(lastname.get(position) + ((name_len > 15) ? "\n" : " ") + firstname.get(position));
@@ -49,16 +55,34 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
 
         switch (st) {
             case "Был":
-                holder.edit.setText("б");
+                holder.sectionAdapterItemStatus.setText("б");
                 break;
 
             case "Не уважительная":
-                holder.edit.setText("н/б");
+                holder.sectionAdapterItemStatus.setText("н/б");
                 break;
 
             default:
-                holder.edit.setText("ув");
+                holder.sectionAdapterItemStatus.setText("ув");
         }
+
+        UsersHelper usersHelper = new UsersHelper(context);
+
+        holder.sectionAdapterItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView b = holder.sectionAdapterItemStatus;
+                if (b.getText() == "ув") {
+                    b.setText("н/б");
+                    usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
+                            pairNum, "Не уважительная", date);
+                } else {
+                    usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
+                            pairNum, "Уважительная", date);
+                    b.setText("ув");
+                }
+            }
+        });
     }
 
     @Override
@@ -69,23 +93,28 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
-        Button edit;
-        TextView id;
+        CardView sectionAdapterItem;
+        TextView sectionAdapterItemStatus;
+        int pairNum;
+        String date;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.personName);
-            edit = itemView.findViewById(R.id.statusEdit);
-            id = itemView.findViewById(R.id.id_section_row);
+            sectionAdapterItem = itemView.findViewById(R.id.SectionAdapterItem);
+            sectionAdapterItemStatus = itemView.findViewById(R.id.SectionAdapterItemStatus);
         }
     }
 
     public SectionAdapter(Context context, ArrayList<String> f, ArrayList<String> l,
-                                 ArrayList<String> status, Boolean isLastFirst) {
+                                 ArrayList<String> status, Boolean isLastFirst,
+                          int pairNum, String date) {
         this.context = context;
         this.lastname = l;
         this.firstname = f;
         this.status = status;
         this.isLastFirst = isLastFirst;
+        this.pairNum = String.valueOf(pairNum + 1);
+        this.date = date;
     }
 }

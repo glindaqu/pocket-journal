@@ -60,7 +60,7 @@ public class SubjectPick extends AppCompatActivity {
     }
 
     public void startFill(View view) {
-        Intent intent = new Intent(SubjectPick.this, FillStates.class);
+        Intent intent = new Intent(SubjectPick.this, FillList.class);
         intent.putExtra("subject", ((Button)view).getText().toString());
         intent.putExtra("date", date);
         startActivity(intent);
