@@ -81,6 +81,13 @@ public class UsersHelper extends SQLiteOpenHelper {
         db.execSQL(q);
     }
 
+    public void removeFromHeap(String userId, String pair, String date) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "DELETE FROM heap WHERE personID = " + userId +
+                " AND pairNumber = " + pair + " AND dateStamp = " + "'" + date + "'";
+        db.execSQL(q);
+    }
+
     public void addNewPerson(String fname, String lname) {
 
         SQLiteDatabase db = this.getWritableDatabase();

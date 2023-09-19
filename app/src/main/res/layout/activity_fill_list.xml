@@ -7,16 +7,36 @@
     android:background="@color/bgBlue"
     tools:context=".FillList">
 
+    <Button
+        android:id="@+id/endFilling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:width="300dp"
+        android:backgroundTint="@color/darkBlue"
+        android:minHeight="70dp"
+        android:onClick="startFill"
+        android:text="Закончить"
+        android:textColor="@color/bisque"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/StateList"
+        tools:ignore="UsingOnClickInXml" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/StateList"
         android:layout_width="409dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,9 @@
 package com.linkqw.diary.additional;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,19 +64,39 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 TextView b = holder.sectionAdapterItemStatus;
-                if (b.getText() == "Уважительная") {
-                    b.setText("Не уважительная");
-                    usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
-                            pairNum, "Не уважительная", date);
-                } else if (b.getText() == "Не уважительная") {
-                    b.setText("Был");
-                    usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
-                            pairNum, "Был", date);
-                } else {
-                    usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
-                            pairNum, "Уважительная", date);
-                    b.setText("Уважительная");
-                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setTitle("Выберите статус");
+
+                builder.setPositiveButton("Уважительная", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        b.setText("Уважительная");
+                        usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
+                                pairNum, "Уважительная", date);
+                    }
+                });
+
+                builder.setNegativeButton("Не уважительная", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        b.setText("Не уважительная");
+                        usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
+                                pairNum, "Не уважительная", date);
+                    }
+                });
+
+                builder.setNeutralButton("Был", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        b.setText("Был");
+                        usersHelper.updateHeap(usersHelper.getIdByUser(firstname.get(position), lastname.get(position)),
+                                pairNum, "Был", date);
+                    }
+                });
+
+                builder.show();
             }
         });
     }

@@ -28,6 +28,7 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
     ArrayList<String> firstname, lastname;
     ArrayList<Integer> id;
     Bundle bundle;
+    boolean isLast;
 
     @NonNull
     @Override
@@ -40,13 +41,28 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        holder.name.setText(lastname.get(position) + " " + firstname.get(position));
+        int length = (lastname.get(position) + firstname.get(position)).length();
+
+        if (length > 15) {
+            if (isLast) {
+                holder.name.setText(lastname.get(position) + "\n" + firstname.get(position));
+            } else {
+                holder.name.setText(firstname.get(position) + "\n" + lastname.get(position));
+            }
+        } else {
+            if (isLast) {
+                holder.name.setText(lastname.get(position) + " " + firstname.get(position));
+            } else {
+                holder.name.setText(firstname.get(position) + " " + lastname.get(position));
+            }
+        }
+
         holder.hID.setText(id.get(position).toString());
         holder.hID.setOnClickListener(new View.OnClickListener() {
             final UsersHelper us = new UsersHelper(context);
-            String userId = (String) ((TextView)holder.hID).getText();
-            int intPair = us.getCurrentPairNum(bundle.getString("date")) + 1;
-            String pair = String.valueOf(intPair);
+            final String userId = (String) ((TextView)holder.hID).getText();
+            final int intPair = us.getCurrentPairNum(bundle.getString("date")) + 1;
+            final String pair = String.valueOf(intPair);
 
             @Override
             public void onClick(View view) {
@@ -76,6 +92,15 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
                                 bundle.getString("date"));
                     }
                 });
+
+                builder.setNeutralButton("Был", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        holder.status.setText("Был");
+                        us.removeFromHeap(userId, pair, bundle.getString("date"));
+                    }
+                });
+
                 builder.show();
             }
         });
@@ -102,11 +127,12 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
     }
 
     public ListFillAdapter(Context context, ArrayList<String> f,
-                           ArrayList<String> l, ArrayList<Integer> id, Bundle b) {
+                           ArrayList<String> l, ArrayList<Integer> id, Bundle b, boolean isLast) {
         this.context = context;
         this.lastname = l;
         this.firstname = f;
         this.id = id;
         this.bundle = b;
+        this.isLast = isLast;
     }
 }
