@@ -38,7 +38,7 @@ public class TotalInnerAdapter extends RecyclerView.Adapter<TotalInnerAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String name = dataset.get(position).split(",")[0];
 
-        if (name.length() > 15) {
+        if (name.length() > 10) {
             holder.personUnit.setText(name.split(" ")[0] +
                     "\n" + name.split(" ")[1]);
         } else {

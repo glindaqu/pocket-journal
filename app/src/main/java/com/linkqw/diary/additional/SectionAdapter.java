@@ -51,9 +51,9 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         int name_len = (lastname.get(position) + firstname.get(position)).length();
         if (isLastFirst) {
-            holder.title.setText(lastname.get(position) + ((name_len > 15) ? "\n" : " ") + firstname.get(position));
+            holder.title.setText(lastname.get(position) + ((name_len > 10) ? "\n" : " ") + firstname.get(position));
         } else {
-            holder.title.setText(firstname.get(position) + ((name_len > 15) ? "\n" : " ") + lastname.get(position));
+            holder.title.setText(firstname.get(position) + ((name_len > 10) ? "\n" : " ") + lastname.get(position));
         }
 
         holder.sectionAdapterItemStatus.setText(status.get(position));

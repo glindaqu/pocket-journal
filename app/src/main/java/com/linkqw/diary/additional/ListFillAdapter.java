@@ -25,10 +25,13 @@ import java.util.ArrayList;
 public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHolder> {
 
     Context context;
-    ArrayList<String> firstname, lastname;
+    ArrayList<String> firstname, lastname, status;
     ArrayList<Integer> id;
     Bundle bundle;
     boolean isLast;
+    String pair;
+    int intPair;
+    UsersHelper us;
 
     @NonNull
     @Override
@@ -40,10 +43,10 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
         int length = (lastname.get(position) + firstname.get(position)).length();
 
-        if (length > 15) {
+        if (length > 10) {
             if (isLast) {
                 holder.name.setText(lastname.get(position) + "\n" + firstname.get(position));
             } else {
@@ -57,21 +60,20 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
             }
         }
 
+        final String userId = id.get(position).toString();
+
         holder.hID.setText(id.get(position).toString());
+        holder.status.setText(status.get(position));
         holder.hID.setOnClickListener(new View.OnClickListener() {
-            final UsersHelper us = new UsersHelper(context);
-            final String userId = (String) ((TextView)holder.hID).getText();
-            final int intPair = us.getCurrentPairNum(bundle.getString("date")) + 1;
-            final String pair = String.valueOf(intPair);
 
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Выберите статус");
                 builder.setPositiveButton("Уважительная", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        holder.status.setText("Уважительная");
                         if (us.isExistInHeap(userId, pair, bundle.getString("date"))) {
                             us.updateHeap(userId, pair, "Уважительная", bundle.getString("date"));
                         } else {
@@ -80,24 +82,35 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
                                     intPair,
                                     bundle.getString("date"));
                         }
+                        status.set(position, "Уважительная");
+                        notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("Не уважительная", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        holder.status.setText("Не уважительная");
-                        us.addToHeap(
-                                Integer.parseInt((String) ((TextView)view).getText()), "Не уважительная", bundle.getString("subject"),
-                                intPair,
-                                bundle.getString("date"));
+                        if (us.isExistInHeap(userId, pair, bundle.getString("date"))) {
+                            us.updateHeap(userId, pair, "Не уважительная", bundle.getString("date"));
+
+                        } else {
+                            us.addToHeap(
+                                    Integer.parseInt(userId), "Не уважительная", bundle.getString("subject"),
+                                    intPair,
+                                    bundle.getString("date"));
+                        }
+                        status.set(position, "Не уважительная");
+                        notifyDataSetChanged();
                     }
                 });
 
                 builder.setNeutralButton("Был", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        holder.status.setText("Был");
                         us.removeFromHeap(userId, pair, bundle.getString("date"));
+                        status.set(position, "Был");
+                        notifyDataSetChanged();
                     }
                 });
 
@@ -134,5 +147,14 @@ public class ListFillAdapter extends RecyclerView.Adapter<ListFillAdapter.MyHold
         this.id = id;
         this.bundle = b;
         this.isLast = isLast;
+        this.us = new UsersHelper(context);
+        this.intPair = us.getCurrentPairNum(bundle.getString("date")) + 1;
+        this.pair = String.valueOf(intPair);
+
+        this.status = new ArrayList<>(lastname.size());
+
+        for (int i = 0; i < lastname.size(); i++) {
+            status.add("Был");
+        }
     }
 }

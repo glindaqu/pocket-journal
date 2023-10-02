@@ -16,6 +16,7 @@ import com.linkqw.diary.additional.JournalSectionAdapter;
 import com.linkqw.diary.database.UsersHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class JournalView extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class JournalView extends AppCompatActivity {
                 } else {
                     intent = new Intent(JournalView.this, TotalsWithoutSubjects.class);
                 }
-                intent.putExtra("date", getIntent().getExtras().getString("date"));
+                intent.putExtra("date", Objects.requireNonNull(getIntent().getExtras()).getString("date"));
                 startActivity(intent);
                 finish();
             }
