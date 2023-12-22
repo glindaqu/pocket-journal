@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class TotalsWithoutSubjects extends AppCompatActivity {
 
@@ -44,7 +45,7 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
         date1 = findViewById(R.id.firstDatePick);
         date2 = findViewById(R.id.secondDatePick);
 
-        if (getIntent().getExtras().getString("date1") != null) {
+        if (Objects.requireNonNull(getIntent().getExtras()).getString("date1") != null) {
             date1.setText(getIntent().getExtras().getString("date1"));
         } else {
             date1.setText(new SimpleDateFormat("yy-MM-dd").format(new Date()));
@@ -110,7 +111,7 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
                                 (String.valueOf(dayOfMonth).length() > 1 ? dayOfMonth : "0" + dayOfMonth);
                         date2.setText(data);
 
-                        Intent intent = new Intent(TotalsWithoutSubjects.this, JournalView.class);
+                        Intent intent = new Intent(TotalsWithoutSubjects.this, TotalsWithoutSubjects.class);
                         intent.putExtra("date1", date1.getText().toString());
                         intent.putExtra("date2", data);
 

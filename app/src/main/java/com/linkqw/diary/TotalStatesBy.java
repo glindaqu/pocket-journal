@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class TotalStatesBy extends AppCompatActivity {
 
@@ -51,7 +52,7 @@ public class TotalStatesBy extends AppCompatActivity {
         status = new ArrayList<>();
         title = new ArrayList<>();
 
-        if (getIntent().getExtras().getString("date1") != null) {
+        if (Objects.requireNonNull(getIntent().getExtras()).getString("date1") != null) {
             date1.setText(getIntent().getExtras().getString("date1"));
         } else {
             date1.setText(new SimpleDateFormat("yy-MM-dd").format(new Date()));
@@ -67,7 +68,7 @@ public class TotalStatesBy extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TotalStatesBy.this, JournalView.class);
-                intent.putExtra("date", getIntent().getExtras().getString("date"));
+                intent.putExtra("date", Objects.requireNonNull(getIntent().getExtras()).getString("date"));
                 startActivity(intent);
                 finish();
             }
