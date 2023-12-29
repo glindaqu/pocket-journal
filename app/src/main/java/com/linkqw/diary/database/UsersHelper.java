@@ -10,10 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class UsersHelper extends SQLiteOpenHelper {
@@ -67,6 +64,30 @@ public class UsersHelper extends SQLiteOpenHelper {
         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("Recycle")
+    public boolean isExistInHeap(String userId, String pair, String date) {
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM heap WHERE personID = " + userId + " AND pairNumber = " + pair +
+                " AND dateStamp = " + "'" + date + "'";
+
+        boolean next = db.rawQuery(q, null).moveToNext();
+        return  next;
+    }
+
+    public void updateHeap(String userId, String pair, String status, String date) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "UPDATE heap SET status = " + "'" + status + "'" + " WHERE personID = " + userId +
+                " AND pairNumber = " + pair + " AND dateStamp = " + "'" + date + "'";
+        db.execSQL(q);
+    }
+
+    public void removeFromHeap(String userId, String pair, String date) {
+        SQLiteDatabase db = getWritableDatabase();
+        String q = "DELETE FROM heap WHERE personID = " + userId +
+                " AND pairNumber = " + pair + " AND dateStamp = " + "'" + date + "'";
+        db.execSQL(q);
+    }
+
     public void addNewPerson(String fname, String lname) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -82,6 +103,19 @@ public class UsersHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public String getIdByUser(String name, String last) {
+        SQLiteDatabase db = getReadableDatabase();
+        String q = "SELECT * FROM persons WHERE firstname = " + "'" + name + "'" +
+                " AND lastname = " + "'" + last + "'";
+
+        Cursor c = db.rawQuery(q, null);
+
+        if (c.moveToNext()) {
+            return c.getString(0);
+        }
+        return null;
     }
 
     public Cursor getAllDataFrom(String table) {

@@ -1,9 +1,5 @@
 package com.linkqw.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +7,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.linkqw.diary.additional.JournalSectionAdapter;
 import com.linkqw.diary.database.UsersHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class JournalView extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class JournalView extends AppCompatActivity {
                 } else {
                     intent = new Intent(JournalView.this, TotalsWithoutSubjects.class);
                 }
-                intent.putExtra("date", getIntent().getExtras().getString("date"));
+                intent.putExtra("date", Objects.requireNonNull(getIntent().getExtras()).getString("date"));
                 startActivity(intent);
                 finish();
             }
@@ -64,13 +65,14 @@ public class JournalView extends AppCompatActivity {
 
         fillArrays();
         customAdapter = new JournalSectionAdapter(JournalView.this, firstname,
-                lastname, status, title, settings.getBoolean("isLastFirst", false));
+                lastname, status, title, settings.getBoolean("isLastFirst", false),
+                getIntent().getExtras().getString("date"));
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(JournalView.this));
     }
 
     public void fillArrays() {
-         ArrayList<String> data = us.getAllPerformedPais(getIntent().getExtras()
+        ArrayList<String> data = us.getAllPerformedPais(getIntent().getExtras()
                 .getString("date"));
 
         for (int i = 0; i < data.size(); i++) {

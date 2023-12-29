@@ -1,38 +1,28 @@
 package com.linkqw.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.linkqw.diary.additional.CustomAdapter;
-import com.linkqw.diary.additional.JournalSectionAdapter;
-import com.linkqw.diary.additional.TotalAdapter;
 import com.linkqw.diary.additional.WithoutSubjectAdapter;
 import com.linkqw.diary.database.UsersHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
-import java.util.logging.SimpleFormatter;
 
 public class TotalsWithoutSubjects extends AppCompatActivity {
 
@@ -55,7 +45,7 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
         date1 = findViewById(R.id.firstDatePick);
         date2 = findViewById(R.id.secondDatePick);
 
-        if (getIntent().getExtras().getString("date1") != null) {
+        if (Objects.requireNonNull(getIntent().getExtras()).getString("date1") != null) {
             date1.setText(getIntent().getExtras().getString("date1"));
         } else {
             date1.setText(new SimpleDateFormat("yy-MM-dd").format(new Date()));
@@ -121,7 +111,7 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
                                 (String.valueOf(dayOfMonth).length() > 1 ? dayOfMonth : "0" + dayOfMonth);
                         date2.setText(data);
 
-                        Intent intent = new Intent(TotalsWithoutSubjects.this, JournalView.class);
+                        Intent intent = new Intent(TotalsWithoutSubjects.this, TotalsWithoutSubjects.class);
                         intent.putExtra("date1", date1.getText().toString());
                         intent.putExtra("date2", data);
 
@@ -171,7 +161,7 @@ public class TotalsWithoutSubjects extends AppCompatActivity {
 
         ArrayList<String> skipped = us.getAllSkipped(dateEdge1, dateEdge2);
 
-        for (String line : skipped){
+        for (String line : skipped) {
             String curStatus = line.split(",")[1];
             String frst = us.getFirstname(Integer.parseInt(line.split(",")[0]));
             String scnd = us.getLastname(Integer.parseInt(line.split(",")[0]));

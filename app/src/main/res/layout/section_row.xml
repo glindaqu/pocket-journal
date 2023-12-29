@@ -8,9 +8,10 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/SectionAdapterItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_margin="12dp"
         android:background="@color/bgBlue"
         android:backgroundTint="@color/bgBlue">
 
@@ -21,44 +22,29 @@
             android:layout_marginLeft="2dp"
             android:padding="12dp">
 
-            <Button
-                android:id="@+id/statusEdit"
+            <TextView
+                android:id="@+id/SectionAdapterItemStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="25dp"
-                android:height="0dp"
-                android:backgroundTint="@color/darkBlue"
-                android:onClick="startFill"
-                android:text="Дата"
-                android:textColor="@color/bisque"
-                android:textSize="10sp"
+                android:layout_marginEnd="48dp"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="UsingOnClickInXml" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/personName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:text="TextView"
                 android:textColor="@color/bisque"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/statusEdit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/id_section_row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="#00FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/statusEdit"
-                app:layout_constraintEnd_toEndOf="@+id/statusEdit"
-                app:layout_constraintStart_toStartOf="@+id/statusEdit"
-                app:layout_constraintTop_toTopOf="@+id/statusEdit" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

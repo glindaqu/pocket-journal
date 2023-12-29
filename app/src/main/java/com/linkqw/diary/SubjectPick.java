@@ -1,11 +1,6 @@
 package com.linkqw.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.linkqw.diary.additional.CustomAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.linkqw.diary.additional.SubjectBtnAdapter;
 import com.linkqw.diary.database.UsersHelper;
 
@@ -60,8 +57,8 @@ public class SubjectPick extends AppCompatActivity {
     }
 
     public void startFill(View view) {
-        Intent intent = new Intent(SubjectPick.this, FillStates.class);
-        intent.putExtra("subject", ((Button)view).getText().toString());
+        Intent intent = new Intent(SubjectPick.this, FillList.class);
+        intent.putExtra("subject", ((Button) view).getText().toString());
         intent.putExtra("date", date);
         startActivity(intent);
     }

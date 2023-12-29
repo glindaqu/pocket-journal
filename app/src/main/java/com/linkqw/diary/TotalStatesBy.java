@@ -1,24 +1,20 @@
 package com.linkqw.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.linkqw.diary.additional.CustomAdapter;
-import com.linkqw.diary.additional.JournalSectionAdapter;
 import com.linkqw.diary.additional.TotalAdapter;
 import com.linkqw.diary.database.UsersHelper;
 
@@ -26,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class TotalStatesBy extends AppCompatActivity {
 
@@ -55,7 +52,7 @@ public class TotalStatesBy extends AppCompatActivity {
         status = new ArrayList<>();
         title = new ArrayList<>();
 
-        if (getIntent().getExtras().getString("date1") != null) {
+        if (Objects.requireNonNull(getIntent().getExtras()).getString("date1") != null) {
             date1.setText(getIntent().getExtras().getString("date1"));
         } else {
             date1.setText(new SimpleDateFormat("yy-MM-dd").format(new Date()));
@@ -71,7 +68,7 @@ public class TotalStatesBy extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TotalStatesBy.this, JournalView.class);
-                intent.putExtra("date", getIntent().getExtras().getString("date"));
+                intent.putExtra("date", Objects.requireNonNull(getIntent().getExtras()).getString("date"));
                 startActivity(intent);
                 finish();
             }
@@ -166,7 +163,7 @@ public class TotalStatesBy extends AppCompatActivity {
                 String data = String.valueOf(year).substring(2) + "-" +
                         (String.valueOf(month).length() > 1 ? month : "0" + month) + "-" +
                         (String.valueOf(dayOfMonth).length() > 1 ? dayOfMonth : "0" + dayOfMonth);
-                ((Button)findViewById(R.id.date)).setText(data);
+                ((Button) findViewById(R.id.date)).setText(data);
             }
         };
 
